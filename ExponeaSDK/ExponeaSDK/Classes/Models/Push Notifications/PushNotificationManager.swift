@@ -117,11 +117,11 @@ class PushNotificationManager: NSObject, PushNotificationManagerType {
         var postAction: (() -> Void)? = nil
 
         switch action {
-        case .none, .openApp:
+        case .none, .openApp, .deeplink:
             // No need to do anything, app was opened automatically
             break
 
-        case .browser, .deeplink:
+        case .browser:
             // Open the deeplink, iOS will handle if deeplink to safari/other apps
             if let value = actionValue, let url = URL(string: value) {
                 // Track the action URL
@@ -150,7 +150,7 @@ class PushNotificationManager: NSObject, PushNotificationManagerType {
                         fallbackAction()
                         return
                     }
-
+//                    guard NSUserActivity
                     // Simulate universal link user activity
                     let userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
                     userActivity.webpageURL = url
